@@ -10,8 +10,10 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
+    let character = Cat(imageNamed: "cat1")
     override func didMove(to view: SKView) {
         createBackground()
+        characterPosition()
     }
     override func update(_ currentTime: TimeInterval) {
         scrollBackground()
@@ -35,5 +37,11 @@ class GameScene: SKScene {
                 node.position.x += self.frame.size.width * 3
             }
         }))
+    }
+    
+    func characterPosition() {
+        character.size = CGSize(width: 160, height: 160)
+        character.position = CGPoint(x: (self.scene?.size.width)! / 4, y: (self.scene?.size.height)! / 3.5)
+        self.addChild(character)
     }
 }
