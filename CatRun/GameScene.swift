@@ -10,10 +10,9 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
-    let character = Cat(imageNamed: "cat1")
     override func didMove(to view: SKView) {
         createBackground()
-        characterPosition()
+        createCat()
     }
     override func update(_ currentTime: TimeInterval) {
         scrollBackground()
@@ -39,9 +38,26 @@ class GameScene: SKScene {
         }))
     }
     
-    func characterPosition() {
-        character.size = CGSize(width: 160, height: 160)
-        character.position = CGPoint(x: (self.scene?.size.width)! / 4, y: (self.scene?.size.height)! / 3.5)
-        self.addChild(character)
+    func createCat() {
+        let x = (self.scene?.size.width)! / 4
+        let y = (self.scene?.size.height)! / 3.5
+        var cat:SKSpriteNode
+       
+        let cat1 = SKTexture.init(imageNamed: "cat1")
+        cat1.filteringMode = .nearest
+        let cat2 = SKTexture.init(imageNamed: "cat2")
+        cat2.filteringMode = .nearest
+        let animation = SKAction.animate(with: [cat1,cat2], timePerFrame: 0.2)
+        let loop = SKAction.repeatForever(animation)
+        
+        cat = SKSpriteNode(texture: cat1)
+        cat.size = CGSize(width: 160, height: 160)
+        cat.position = CGPoint(x: x, y: y)
+        cat.run(loop)
+        
+        let birdCategory: UInt32 = 1 << 0
+        cat.physicsBody?.categoryBitMask = birdCategory
+        
+        self.addChild(cat)
     }
 }
